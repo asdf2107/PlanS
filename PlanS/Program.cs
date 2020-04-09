@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 
 
 namespace PlanS
@@ -13,7 +12,7 @@ namespace PlanS
         public static int Interval = 1, Width = 84, Height = 30, ActivePlan = 0;
         public static List<Frame> l = new List<Frame>() { new PlanPlus(0) };
         public static ConsoleColor BackCol = ConsoleColor.Black;
-
+        
 
         static void Main(string[] args)
         {
@@ -77,7 +76,7 @@ namespace PlanS
                 }
             }
         }
-
+         
 
         public static void NewFile()
         {

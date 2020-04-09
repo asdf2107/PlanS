@@ -5,7 +5,7 @@ using System.Text;
 namespace PlanS
 {
     public class Plan : Frame
-    {
+    { 
         public static TimeSpan RedZone = new TimeSpan(36, 0, 0);
         protected string name;
         protected bool showLabels = true;

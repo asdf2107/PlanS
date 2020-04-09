@@ -13,7 +13,7 @@ namespace PlanS
         public Point StartPoint { get; set; }
         protected bool Chosen { get; set; } = false;
 
-
+         
         public Frame(int i)
         {
             StartPoint = Program.GetLocation(i);

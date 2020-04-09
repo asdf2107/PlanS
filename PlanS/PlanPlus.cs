@@ -20,7 +20,7 @@ namespace PlanS
             PaintInside();
             DrawPlus();
         }
-
+         
 
         protected void DrawPlus()
         {
