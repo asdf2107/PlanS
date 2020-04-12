@@ -47,7 +47,11 @@ namespace PlanS
             List<string> p = new List<string>();
             for (int i = 0; i < l.Count - 1; i++)
             {
-                p.Add(((Plan)l[i]).GetInfoString());
+                try
+                {
+                    p.Add(((Plan)l[i]).GetInfoString());
+                }
+                catch { }
             }
             File.WriteAllLines("plans.txt", p);
         }
@@ -95,9 +99,39 @@ namespace PlanS
         }
 
 
+        public static void SortPlans()
+        {
+            Frame[] frames = new Frame[l.Count];
+            Array.Copy(l.ToArray(), frames, l.Count);
+            List<Plan> plans = new List<Plan>();
+            try
+            {
+                PlanPlus _ = frames.Last() as PlanPlus;
+                frames[frames.Length - 1] = null;
+            }
+            catch { }
+            for (int i = 0; i < frames.Length; i++)
+            {
+                if (frames[i] != null)
+                    plans.Add(frames[i] as Plan);
+            }
+            plans.Sort(new DateComp());
+            List<Frame> res = new List<Frame>();
+            foreach (Plan p in plans)
+            {
+                res.Add(p);
+            }
+            res.Add(new PlanPlus(plans.Count));
+            l = res;
+            UpdateLocs(0);
+        }
+
+
         public static void AddNewPlan()
         {
             AddPlan(new Plan(l.Count - 1));
+            SortPlans();
+            DrawAll();
             SaveToFile();
             l.Last().ChangeChosen(true);
         }
