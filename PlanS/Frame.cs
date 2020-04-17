@@ -25,6 +25,7 @@ namespace PlanS
 
         protected void DrawFrame()
         {
+            AddBufferIfNeeded(StartPoint.Y + Height + 2);
             if (Console.CursorVisible)
             {
                 Program.DebugDraw();
@@ -63,6 +64,15 @@ namespace PlanS
         }
 
 
+        protected void AddBufferIfNeeded(int height)
+        {
+            if (height >= Console.BufferHeight)
+            {
+                Console.BufferHeight += Height + 2;
+            }
+        }
+
+
         protected void ReadKeyPress()
         {
             bool stop = false;
@@ -71,10 +81,20 @@ namespace PlanS
                 ConsoleKey k = Console.ReadKey(true).Key;
                 switch (k)
                 {
-                    case ConsoleKey.Tab:
+                    case ConsoleKey.RightArrow:
                         stop = true;
-                        Program.SwitchChosen();
+                        Program.SwitchChosen(true);
                         break;
+                    case ConsoleKey.DownArrow:
+                        goto case ConsoleKey.RightArrow;
+                    case ConsoleKey.Tab:
+                        goto case ConsoleKey.RightArrow;
+                    case ConsoleKey.LeftArrow:
+                        stop = true;
+                        Program.SwitchChosen(false);
+                        break;
+                    case ConsoleKey.UpArrow:
+                        goto case ConsoleKey.LeftArrow;
                     case ConsoleKey.Enter:
                         stop = true;
                         Act();
@@ -83,6 +103,8 @@ namespace PlanS
                         stop = true;
                         Del();
                         break;
+                    case ConsoleKey.Delete:
+                        goto case ConsoleKey.Backspace;
                 }
             }
         }

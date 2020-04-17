@@ -160,13 +160,23 @@ namespace PlanS
         }
 
 
-        public static void SwitchChosen()
+        public static void SwitchChosen(bool posDir)
         {
             l[ActivePlan].ChangeChosen(false);
-            if (ActivePlan + 1 == l.Count)
-                ActivePlan = 0;
+            if (posDir)
+            {
+                if (ActivePlan + 1 == l.Count)
+                    ActivePlan = 0;
+                else
+                    ActivePlan++;
+            }
             else
-                ActivePlan++;
+            {
+                if (ActivePlan - 1 == -1)
+                    ActivePlan = l.Count - 1;
+                else
+                    ActivePlan--;
+            }
             l[ActivePlan].ChangeChosen(true);
         }
 
@@ -213,8 +223,15 @@ namespace PlanS
             {
                 for (int x = p.X; x < p.X + Frame.Width + 2; x++)
                 {
-                    Console.SetCursorPosition(x, y);
-                    Console.Write(' ');
+                    try
+                    {
+                        Console.SetCursorPosition(x, y);
+                        Console.Write(' ');
+                    }
+                    catch
+                    {
+                        Console.BufferHeight += 6;
+                    }
                 }
             }
         }
